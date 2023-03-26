@@ -7,7 +7,7 @@ public class Library {
         System.out.print("Enter number of possible members: ");
         int arraySize = scanner.nextInt();
         long[] ids = new long[arraySize];
-        long lastId = 1;
+        long lastId = 0;
         String[] names = new String[arraySize];
         char[] genders = new char[arraySize];
         byte[] ages = new byte[arraySize];
@@ -21,14 +21,14 @@ public class Library {
         while(true){
             mainMenu();
             int choice = scanner.nextInt();
-            if(choice >=1 && choice >=5){
-               switch (choice){
+            if(choice >=1 && choice <=5){
+               switch(choice){
                    case 1 :
-                       addMember(ids , names , genders , ages , arraySize , scanner,filledElements);
+                       addMember(ids , names , genders , ages , arraySize , scanner,filledElements,lastId);
                        lastId++;
                        break;
                    case 2 :
-                       showMember();
+                       showMember(ids , names , genders , ages , arraySize , scanner,filledElements,lastId);
                        break;
                    case 3 :
                        editMember();
@@ -50,27 +50,48 @@ public class Library {
 
 
     }
-    public static void addMember(long[] ids , String[] names , char[] genders , byte[] ages , int arraySize , Scanner scanner,boolean[] filledElements){
-
+    public static void addMember(long[] ids , String[] names , char[] genders , byte[] ages , int arraySize , Scanner scanner,boolean[] filledElements , long lastId){
         int index;
-        for(index =0; index<filledElements.length;index++ ){
-            if(!filledElements[index]){
+        for(index =(int) lastId; index<filledElements.length;index++ ){
+            if(filledElements[index]){
+                break;
+            }else{
+                System.out.print("\033[H\033[2J");
+                System.out.println("Name :");
+                names[index]=scanner.next();
+                System.out.println("Age :");
+                ages[index] = scanner.nextByte();
+                System.out.println("Gender : ");
+                genders[index] = scanner.next().charAt(0);
+                ids[index]=lastId;
+                filledElements[index]=true;
                 break;
             }
-            System.out.print("\033[H\033[2J");
-            System.out.println("Name :");
-            names[index]=scanner.next();
-            System.out.println("Age :");
-            ages[index] = scanner.nextByte();
-            System.out.println("Gender : ");
-            genders[index] = scanner.next().charAt(0);
-
 
         }
 
 
     }
-    public static void showMember(){}
+    public static void showMember(long[] ids , String[] names , char[] genders , byte[] ages , int arraySize , Scanner scanner,boolean[] filledElements , long lastId){
+        int index;
+        int count = 0;
+        System.out.println("Please write the ID :");
+        long idSelector = scanner.nextLong();
+        for(index=0;index<ids.length;index++){
+            count++;
+            if(idSelector==ids[index]){
+                System.out.println("ID :"+ids[index]);
+                System.out.println("Name :"+names[(int) idSelector]);
+                System.out.println("Age :"+ages[(int) idSelector]);
+                System.out.println("Gender :"+genders[(int) idSelector]);
+            }
+        }
+        if (count==arraySize){
+            System.out.println("The user not found");
+        }
+
+
+    }
     public static void editMember(){}
     public static void deleteMember(){}
     public static void exit(){}
