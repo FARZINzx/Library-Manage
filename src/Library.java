@@ -31,7 +31,7 @@ public class Library {
                        showMember(ids , names , genders , ages , arraySize , scanner,filledElements,lastId);
                        break;
                    case 3 :
-                       editMember();
+                       editMember(ids , names , genders , ages , arraySize , scanner,filledElements,lastId);
                        break;
                    case 4 :
                        deleteMember();
@@ -42,7 +42,7 @@ public class Library {
                }
             }else{
                 System.out.println("Please select the correct number");
-                System.out.print("\033[H\033[2J");
+                System.out.print("/033[H/033[2J]51");
                 continue;
 
             }
@@ -84,6 +84,7 @@ public class Library {
                 System.out.println("Name :"+names[(int) idSelector]);
                 System.out.println("Age :"+ages[(int) idSelector]);
                 System.out.println("Gender :"+genders[(int) idSelector]);
+                break;
             }
         }
         if (count==arraySize){
@@ -92,7 +93,28 @@ public class Library {
 
 
     }
-    public static void editMember(){}
+    public static void editMember(long[] ids , String[] names , char[] genders , byte[] ages , int arraySize , Scanner scanner,boolean[] filledElements , long lastId){
+        int index;
+        int count = 0;
+        System.out.println("Please write the ID :");
+        long idSelector = scanner.nextLong();
+        for(index=0;index<ids.length;index++){
+            count++;
+            if(idSelector==ids[index]){
+                System.out.println("Name :");
+                names[index]=scanner.next();
+                System.out.println("Age :");
+                ages[index] = scanner.nextByte();
+                System.out.println("Gender : ");
+                genders[index] = scanner.next().charAt(0);
+                break;
+            }
+        }
+        if (count==arraySize){
+            System.out.println("The user not found");
+        }
+
+    }
     public static void deleteMember(){}
     public static void exit(){}
       public static void mainMenu(){
