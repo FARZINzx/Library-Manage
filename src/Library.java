@@ -21,7 +21,7 @@ public class Library {
         while(true){
             mainMenu();
             int choice = scanner.nextInt();
-            if(choice <=1 && choice >=5){
+            if(choice >=1 && choice >=5){
                switch (choice){
                    case 1 :
                        addMember(ids , names , genders , ages , arraySize , scanner,filledElements);
@@ -54,7 +54,6 @@ public class Library {
 
         int index;
         for(index =0; index<filledElements.length;index++ ){
-            System.out.println(filledElements.length);
             if(!filledElements[index]){
                 break;
             }
