@@ -7,7 +7,7 @@ public class Library {
         System.out.print("Enter number of possible members: ");
         int arraySize = scanner.nextInt();
         long[] ids = new long[arraySize];
-        long lastId = 0;
+        long lastId = 1;
         String[] names = new String[arraySize];
         char[] genders = new char[arraySize];
         byte[] ages = new byte[arraySize];
@@ -34,7 +34,7 @@ public class Library {
                        editMember(ids , names , genders , ages , arraySize , scanner,filledElements,lastId);
                        break;
                    case 4 :
-                       deleteMember();
+                       deleteMember(ids , names , genders , ages , arraySize , scanner,filledElements,lastId);
                        break;
                    case 5 :
                        exit();
@@ -42,7 +42,6 @@ public class Library {
                }
             }else{
                 System.out.println("Please select the correct number");
-                System.out.print("/033[H/033[2J]51");
                 continue;
 
             }
@@ -52,11 +51,10 @@ public class Library {
     }
     public static void addMember(long[] ids , String[] names , char[] genders , byte[] ages , int arraySize , Scanner scanner,boolean[] filledElements , long lastId){
         int index;
-        for(index =(int) lastId; index<filledElements.length;index++ ){
+        for(index =0; index<filledElements.length;index++ ){
             if(filledElements[index]){
                 break;
             }else{
-                System.out.print("\033[H\033[2J");
                 System.out.println("Name :");
                 names[index]=scanner.next();
                 System.out.println("Age :");
@@ -69,17 +67,18 @@ public class Library {
             }
 
         }
-
-
+        System.out.println("member id"+" "+lastId+" "+"added");
+        cls();
     }
     public static void showMember(long[] ids , String[] names , char[] genders , byte[] ages , int arraySize , Scanner scanner,boolean[] filledElements , long lastId){
         int index;
         int count = 0;
         System.out.println("Please write the ID :");
         long idSelector = scanner.nextLong();
-        for(index=0;index<ids.length;index++){
+        for(index=1;index<=ids.length;index++){
             count++;
             if(idSelector==ids[index]){
+                System.out.println(count);
                 System.out.println("ID :"+ids[index]);
                 System.out.println("Name :"+names[(int) idSelector]);
                 System.out.println("Age :"+ages[(int) idSelector]);
@@ -98,7 +97,7 @@ public class Library {
         int count = 0;
         System.out.println("Please write the ID :");
         long idSelector = scanner.nextLong();
-        for(index=0;index<ids.length;index++){
+        for(index=1;index<=ids.length;index++){
             count++;
             if(idSelector==ids[index]){
                 System.out.println("Name :");
@@ -115,15 +114,33 @@ public class Library {
         }
 
     }
-    public static void deleteMember(){}
+    public static void deleteMember(long[] ids , String[] names , char[] genders , byte[] ages , int arraySize , Scanner scanner,boolean[] filledElements , long lastI){
+        System.out.println("Enter member id :");
+        int choice = scanner.nextInt();
+        int index;
+        for(index=1;index<=filledElements.length;index++){
+            if(choice==ids[index] && filledElements[index]){
+                filledElements[index]=false;
+            }
+        }
+        System.out.println("User not found");
+
+    }
     public static void exit(){}
       public static void mainMenu(){
-            System.out.print("\033[H\033[2J");
+        cls();
             System.out.println("1) Add Member");
             System.out.println("2) Show Member");
             System.out.println("3) Edit Member");
             System.out.println("4) Delete Member");
             System.out.println("5) Exit");
             System.out.print("Please enter a number between 1 and 5 : ");
+    }
+    static void cls(){
+        try {
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        } catch (Exception e) {
+
+        }
     }
 }
